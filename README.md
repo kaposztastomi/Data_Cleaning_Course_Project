@@ -1,7 +1,7 @@
----
-title: "ReadMe"
 
----
+#README
+
+
 
 This document describes contents required for Course Project for Getting and Cleaning Data Course.
 
