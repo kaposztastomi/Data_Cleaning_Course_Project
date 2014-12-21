@@ -54,5 +54,5 @@ selected<-select(FullDataSet,cols)
 
 averages_data <-ddply(selected, c("Subject","Activity"), numcolwise(mean))
 
-write.table(averages_data, "averages_data.txt", row.name=TRUE)
+write.table(averages_data, "./Course Project/Data_Cleaning_Course_Project/averages_data.txt", row.name=TRUE)
 
