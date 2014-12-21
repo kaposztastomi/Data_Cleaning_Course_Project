@@ -1,5 +1,6 @@
 rm(list=ls(all=TRUE))  # remove all variable
 library(dplyr)
+library(plyr)
 
 #WorkingDirectory <- 'c:/Coursera/R/DataCleaning/Week2'   # set WD
 
@@ -26,31 +27,32 @@ testy =  read.table("./UCI HAR Dataset/test/y_test.txt",col.names="Code")
 
 
 
-
 testmergex <- cbind(testid, testx)
 testmergey <- merge(testy, label, by="Code")
 
 
 trainmergex <- cbind(trainid, trainx)
-trainmergey<-merge(trainy, label, by="Code")
+trainmergey <- merge(trainy, label, by="Code")
 
 FullTestDataSet<-cbind(testmergex,testmergey)
 FullTrainDataSet<-cbind(trainmergex,trainmergey)
 
-View(FullTestDataSet)
-View(FullTrainDataSet)
+
 
 
 FullDataSet <- rbind(FullTrainDataSet,FullTestDataSet)
 
 
-cols<-grep("mean",feature$V2)
-cols<-append(cols,grep("Mean",names(FullDataSet)))
+cols<-grep("mean",names(FullDataSet))
+#cols<-append(cols,grep("Mean",names(FullDataSet)))
 cols<-append(cols,grep("std",names(FullDataSet)))
-cols<-append(cols,grep("Code",names(FullDataSet)))
 cols<-append(cols,grep("Subject",names(FullDataSet)))
 cols<-append(cols,grep("Activity",names(FullDataSet)))
 
 
 selected<-select(FullDataSet,cols)
+
+averages_data <-ddply(selected, c("Subject","Activity"), numcolwise(mean))
+
+write.table(averages_data, "averages_data.txt", row.name=TRUE)
 
